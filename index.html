@@ -1,63 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>Catatan Pengeluaran Bulanan</title>
-  
+  <title>Embed Google Script – Fullscreen</title>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <style>
-    /* 1. Atur html dan body agr memenuhi viewport */
     html, body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        /*overflow: hidden; */
-        background-color: #f0f0f0; /* Tambahkan warna latar belakang jika perlu */
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      overflow: hidden;
     }
-    
-    /* 2. Style untuk container (wadah) iframe */
-    #iframe-container {
-        /* Memberikan jarak 15px dari sisi atas, bawah, kanan, dan kiri viewport */
-        margin: 15px; 
-        
-        /* Hitung lebar dan tinggi agar pas di dalam margin */
-        width: calc(100% - 30px); /* 100% - (15px kiri + 15px kanan) */
-        height: calc(100vh - 30px); /* 100vh - (15px atas + 15px bawah) */
-        
-        /* Posisi fixed agar tetap di tempat dan dihitung dari viewport */
-        position: fixed; 
-        top: 0;
-        left: 0;
-        box-sizing: border-box; /* Memastikan padding/border tidak menambah ukuran total */
+
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      display: block;
     }
-    
-    /* 3. Style untuk iframe di dalam container */
-    #iframe-container iframe {
-        width: 100%; 
-        height: 100%; 
-        border: none;
+
+    /* Tombol fullscreen (wajib untuk browser) */
+    #fullscreenBtn {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 9999;
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      background: #16a34a;
+      color: white;
+      cursor: pointer;
     }
   </style>
-  
 </head>
+
 <body>
 
-  <div id="iframe-container">
-    <iframe 
-      src="https://script.google.com/macros/s/AKfycbytcYaBDS-ieQYy6HTetLGzZLAABj_bAJ5DhkJ2htCHgh_bGHDh0m0oGYidKpaclcmpew/exec"
-      allowfullscreen="true">
-    </iframe>
-  </div>
+  <button id="fullscreenBtn">Full Screen</button>
+
+  <iframe
+    src="https://script.google.com/macros/s/AKfycbytcYaBDS-ieQYy6HTetLGzZLAABj_bAJ5DhkJ2htCHgh_bGHDh0m0oGYidKpaclcmpew/exec"
+    allowfullscreen>
+  </iframe>
 
   <script>
-    window.onload = function() {
-      // Script ini tetap mencari iframe, pastikan targetnya benar
-      document.querySelector('#iframe-container iframe')
-        .requestFullscreen()
-        .catch((err) => {
-          console.error('Error attempting to enable full-screen mode:', err.message);
-        });
+    document.getElementById("fullscreenBtn").onclick = () => {
+      const el = document.documentElement;
+
+      if (el.requestFullscreen) el.requestFullscreen();
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+      else if (el.msRequestFullscreen) el.msRequestFullscreen();
     };
   </script>
+
 </body>
 </html>
